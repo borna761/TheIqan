@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  main: MyString
+  iqan_id: 
+  theme_id: 
+
+two:
+  main: MyString
+  iqan_id: 
+  theme_id: 

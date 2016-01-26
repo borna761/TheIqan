@@ -1,0 +1,2 @@
+class ThemeParagraphsController < ApplicationController
+end

@@ -1,0 +1,2 @@
+class SubthemeparagraphsController < ApplicationController
+end
