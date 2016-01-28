@@ -1,0 +1,88 @@
+<%
+oldnumber = -1
+dashactive = false
+wasmain = false
+first = true
+themeparagraphstring = ""
+theme.themeparagraphs.each do |themeparagraph|
+  if themeparagraph.iqan.number == oldnumber + 1
+    if dashactive
+      # we're currently in a dash, check if we should end the number
+      if wasmain
+        # old one was main, if this one is too, we don't do anything
+        if themeparagraph.main == "x"
+          # do nothing
+        else
+          # old one was main, this one isn't
+          # add old number, close bold and add new number
+          themeparagraphstring += oldnumber.to_s + "</b>, " + themeparagraph.iqan.number.to_s
+          wasmain = false
+          dashactive = false
+        end
+      else
+        if themeparagraph.main == "x"
+          # new one is main, close out old one
+          themeparagraphstring += oldnumber.to_s + ", <b>" + themeparagraph.iqan.number.to_s
+          wasmain = true
+        end
+      end
+    else
+      dashactive = true
+      if wasmain
+        # old one was main
+        if themeparagraph.main == "x"
+          # this one is too, add dash
+          themeparagraphstring += "-"
+        else
+          # this one isn't, close out
+          themeparagraphstring += oldnumber.to_s + "</b>, " + themeparagraph.iqan.number.to_s
+          wasmain = false
+          dashactive = false
+        end
+      else
+        if themeparagraph.main == "x"
+          themeparagraphstring += ", <b>" + themeparagraph.iqan.number.to_s
+          wasmain = true
+        else
+          themeparagraphstring += "-"
+        end
+      end
+    end
+
+  else
+    if dashactive
+      themeparagraphstring += oldnumber.to_s
+    end
+    if wasmain
+      themeparagraphstring += "</b>"
+    end
+
+    unless first
+      themeparagraphstring += ", "
+    else
+      first = false
+    end
+
+    # new one, check if it's main
+    if themeparagraph.main == "x"
+      themeparagraphstring += "<b>"
+      wasmain = true
+    else
+      wasmain = false
+    end
+
+    dashactive = false
+    themeparagraphstring += themeparagraph.iqan.number.to_s
+  end
+  oldnumber = themeparagraph.iqan.number
+end
+
+# final checks if we have any active ones
+if dashactive
+  themeparagraphstring += oldnumber.to_s
+end
+if wasmain
+  themeparagraphstring += "</b>"
+end
+%>
+<%= themeparagraphstring.html_safe %>

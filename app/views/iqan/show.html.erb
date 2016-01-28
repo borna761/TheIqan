@@ -1,4 +1,6 @@
 <div><%= @iqan.number %></div>
 <div><%= @iqan.text %></div>
 
+<%= render 'layouts/themes', iqan: @iqan %>
+
 <%= link_to("Back to Iqan", iqan_path) %>

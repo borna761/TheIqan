@@ -3,24 +3,13 @@
 <% @themes.each do |theme| %>
   <div><%= link_to(theme.number, theme_path(theme.number)) %></div>
   <div><%= theme.theme %></div>
-  <% theme.themeparagraphs.each do |themeparagraph| %>
-  <% if themeparagraph.main == 'x' %>
-  <b><%= themeparagraph.iqan.number %></b>
-  <% else %>
-  <%= themeparagraph.iqan.number %>
-  <% end %>
-  <% end %>
-  <ul>
-  <% theme.subthemes.each do |subtheme| %>
-    <li><%= subtheme.subtheme %>
-      <% subtheme.subthemeparagraphs.each do |subthemeparagraph| %>
-      <% if subthemeparagraph.main == 'x' %>
-      <b><%= subthemeparagraph.iqan.number %></b>
-      <% else %>
-      <%= subthemeparagraph.iqan.number %>
+  <%= render 'layouts/themeparagraphs', theme: theme %>
+
+  <% if theme.subthemes.count > 0 %>
+    <ul>
+      <% theme.subthemes.each do |subtheme| %>
+        <%= render 'layouts/subthemeparagraphs', subtheme: subtheme %>
       <% end %>
-      <% end %>
-    </li>
-    <% end %>
     </ul>
-<% end %>
+  <% end
+end %>

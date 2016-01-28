@@ -1,0 +1,90 @@
+<%
+oldnumber = -1
+dashactive = false
+wasmain = false
+first = true
+subthemeparagraphstring = "<li> " + subtheme.subtheme + ": "
+subtheme.subthemeparagraphs.each do |subthemeparagraph|
+  if subthemeparagraph.iqan.number == oldnumber + 1
+    if dashactive
+      # we're currently in a dash, check if we should end the number
+      if wasmain
+        # old one was main, if this one is too, we don't do anything
+        if subthemeparagraph.main == "x"
+          # do nothing
+        else
+          # old one was main, this one isn't
+          # add old number, close bold and add new number
+          subthemeparagraphstring += oldnumber.to_s + "</b>, " + subthemeparagraph.iqan.number.to_s
+          wasmain = false
+          dashactive = false
+        end
+      else
+        if subthemeparagraph.main == "x"
+          # new one is main, close out old one
+          subthemeparagraphstring += oldnumber.to_s + ", <b>" + subthemeparagraph.iqan.number.to_s
+          wasmain = true
+        end
+      end
+    else
+      dashactive = true
+      if wasmain
+        # old one was main
+        if subthemeparagraph.main == "x"
+          # this one is too, add dash
+          subthemeparagraphstring += "-"
+        else
+          # this one isn't, close out
+          subthemeparagraphstring += oldnumber.to_s + "</b>, " + subthemeparagraph.iqan.number.to_s
+          wasmain = false
+          dashactive = false
+        end
+      else
+        if subthemeparagraph.main == "x"
+          subthemeparagraphstring += ", <b>" + subthemeparagraph.iqan.number.to_s
+          wasmain = true
+          dashactive = false
+        else
+          subthemeparagraphstring += "-"
+        end
+      end
+  end
+
+  else
+  if dashactive
+    subthemeparagraphstring += oldnumber.to_s
+  end
+  if wasmain
+    subthemeparagraphstring += "</b>"
+  end
+
+  unless first
+    subthemeparagraphstring += ", "
+  else
+    first = false
+  end
+
+  # new one, check if it's main
+  if subthemeparagraph.main == "x"
+    subthemeparagraphstring += "<b>"
+    wasmain = true
+  else
+    wasmain = false
+  end
+
+  dashactive = false
+  subthemeparagraphstring += subthemeparagraph.iqan.number.to_s
+  end
+  oldnumber = subthemeparagraph.iqan.number
+end
+
+# final checks if we have any active ones
+if dashactive
+  subthemeparagraphstring += oldnumber.to_s
+end
+if wasmain
+  subthemeparagraphstring += "</b>"
+end
+
+%>
+<%= subthemeparagraphstring.html_safe %>
