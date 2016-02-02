@@ -2,17 +2,19 @@ IN THE NAME OF OUR LORD,<br/>THE EXALTED, THE MOST HIGH.
 
 <div id="part_container">Part One
   <% first = true
-  @iqan.each do |iqan|
+  @iqan.order(:number).each do |iqan|
     if iqan.part == 2 && first %>
       </div>
       <div id="part_container">Part Two
       <% first = false
     end %>
 
-    <div><%= link_to(iqan.number, showiqan_path(iqan.number)) %></div>
-    <div><%= iqan.text %></div>
+    <div id="innercontainer">
+      <div style="float: left; width: 30px;"><%= link_to(iqan.number, showiqan_path(iqan.number)) %></div>
+      <div style="padding-left: 30px;"><p><%= iqan.text %></p></div>
 
-    <%= render 'layouts/themes', iqan: iqan %>
+      <%= render 'layouts/themes', iqan: iqan %>
+    </div>
 
   <% end %>
 </div>
