@@ -3,13 +3,6 @@
 <% @themes.order(:number).each do |theme| %>
   <div><%= link_to(theme.number, theme_path(theme.number)) %></div>
   <div><%= theme.theme %></div>
-  <%= render 'layouts/themeparagraphs', theme: theme %>
 
-  <% if theme.subthemes.count > 0 %>
-    <ul>
-      <% theme.subthemes.order(:number).each do |subtheme| %>
-        <%= render 'layouts/subthemeparagraphs', subtheme: subtheme %>
-      <% end %>
-    </ul>
-  <% end
-end %>
+  <%= render 'layouts/themes', theme: theme %>
+<% end %>

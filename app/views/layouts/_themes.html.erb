@@ -1,12 +1,3 @@
-<% if (iqan.themes.count + iqan.subthemes.count > 0) %>
-  <div id="themes">
-    <% iqan.themes.order(:number).each do |theme| %>
-      <div><%= theme.theme %></div>
-    <% end %>
-    <% iqan.subthemes.order(:id).each do |subtheme|
-      combineTheme = subtheme.theme.theme + (subtheme.theme.number == 1? ":": "") + " " + subtheme.subtheme %>
-      <div><%= combineTheme %></div>
-    <% end %>
-  </div>
-<hr>
-<% end %>
+<%= render 'layouts/themeparagraphs', theme: theme %>
+
+<%= render 'layouts/subthemes', theme: theme %>

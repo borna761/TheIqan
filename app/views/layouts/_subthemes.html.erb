@@ -1,0 +1,7 @@
+<% if theme.subthemes.count > 0 %>
+  <ul>
+    <% theme.subthemes.order(:number).each do |subtheme| %>
+      <%= render 'layouts/subthemeparagraphs', subtheme: subtheme %>
+    <% end %>
+  </ul>
+<% end %>
