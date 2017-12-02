@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20160126200027) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "iqans", force: :cascade do |t|
     t.integer  "number"
@@ -27,10 +29,9 @@ ActiveRecord::Schema.define(version: 20160126200027) do
     t.integer  "iqan_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["iqan_id"], name: "index_subthemeparagraphs_on_iqan_id", using: :btree
+    t.index ["subtheme_id"], name: "index_subthemeparagraphs_on_subtheme_id", using: :btree
   end
-
-  add_index "subthemeparagraphs", ["iqan_id"], name: "index_subthemeparagraphs_on_iqan_id"
-  add_index "subthemeparagraphs", ["subtheme_id"], name: "index_subthemeparagraphs_on_subtheme_id"
 
   create_table "subthemes", force: :cascade do |t|
     t.integer  "number"
@@ -38,9 +39,8 @@ ActiveRecord::Schema.define(version: 20160126200027) do
     t.integer  "theme_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_subthemes_on_theme_id", using: :btree
   end
-
-  add_index "subthemes", ["theme_id"], name: "index_subthemes_on_theme_id"
 
   create_table "themeparagraphs", force: :cascade do |t|
     t.string   "main"
@@ -48,10 +48,9 @@ ActiveRecord::Schema.define(version: 20160126200027) do
     t.integer  "theme_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["iqan_id"], name: "index_themeparagraphs_on_iqan_id", using: :btree
+    t.index ["theme_id"], name: "index_themeparagraphs_on_theme_id", using: :btree
   end
-
-  add_index "themeparagraphs", ["iqan_id"], name: "index_themeparagraphs_on_iqan_id"
-  add_index "themeparagraphs", ["theme_id"], name: "index_themeparagraphs_on_theme_id"
 
   create_table "themes", force: :cascade do |t|
     t.integer  "number"
